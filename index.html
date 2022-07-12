@@ -1,0 +1,67 @@
+<html>
+
+<head>
+  <title>JS stupid</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    .cont {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .box {
+      width: 100px;
+      height: 100px;
+      color: white;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      margin-left: 20px;
+      box-shadow: 2px 2px 2px 2px #C4C4C4;
+      transition: 0.5s;
+    }
+
+    .box:nth-of-type(1) {
+      background: #034159;
+    }
+
+    .box:nth-of-type(2) {
+      background: #025951;
+    }
+
+    .box:nth-of-type(3) {
+      background: #02735E;
+    }
+
+    .box:nth-of-type(4) {
+      background: #038C3E;
+    }
+
+    .box:hover {
+      transform: scale(1.2);
+      transition: 0.5s;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="cont">
+    <div class="box" id="bUno">#034159</div>
+    <div class="box" id="bDos"> #025951</div>
+    <div class="box" id="bTres">#02735E</div>
+    <div class="box" id="bCuatro">#038C3E</div>
+  </div>
+
+
+  <script src="app.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>chronos</title>
+  <style>
+    :root {
+      --base_color: #ADADAD;
+      --base_roundness: 16px
+    }
+
+    body {
+      font-family: sans-serif;
+      font-size: var(--base-roundness);
+    }
+
+    .container {
+      width: 90vw;
+      margin: 1rem auto;
+      border: 1px solid var(--base_color);
+      padding: 1rem;
+      border-radius: 1rem;
+    }
+
+    .container .output {
+      background: var(--base_color);
+      font-size: 2rem;
+      padding: 1rem;
+      border-radius: 8px;
+      display: flex;
+    }
+
+    .container .input {
+      display: flex;
+      ;
+    }
+
+    .container .input input {
+      background: var(--base_color);
+      font-size: 2rem;
+      padding: 1rem;
+      border-radius: 8px;
+      display: flex;
+    }
+
+    .buttons {
+      display: flex;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .buttons>button {
+      width: 32%;
+      padding: 1rem;
+      text-align: center;
+      border: 1px solid var(--base_color);
+      margin: .5rem;
+      border-radius: 8px;
+    }
+
+    .buttons>button:disabled {
+      opacity: 0.5;
+      background: gray;
+    }
+
+    .modes {
+      background: gray;
+      display: flex;
+      justify-content: center;
+      padding: 1rem 1rem 0 1rem;
+    }
+
+    .modes .mode {
+      width: 20%;
+      background: #FFF;
+      border-radius: 1rem 1rem 0 0;
+      padding: 1rem 0;
+      margin: 0 5px;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .tab {
+      padding: 1rem;
+    }
+
+    .tab.hidden {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <div class="selector">
+      <div class="modes">
+        <div class="mode" id="btnChrono"> chrono
+          <svg width="16" height="20" viewBox="0 0 16 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M9 11H11C11.2652 11 11.5196 11.1054 11.7071 11.2929C11.8946 11.4804 12 11.7348 12 12C12 12.2652 11.8946 12.5196 11.7071 12.7071C11.5196 12.8946 11.2652 13 11 13H8C7.86857 13.0004 7.73835 12.9748 7.61685 12.9247C7.49535 12.8746 7.38495 12.8009 7.29201 12.708C7.19907 12.6151 7.12543 12.5047 7.07531 12.3832C7.0252 12.2616 6.99961 12.1314 7 12V8C7 7.73478 7.10536 7.48043 7.29289 7.29289C7.48043 7.10536 7.73478 7 8 7C8.26522 7 8.51957 7.10536 8.70711 7.29289C8.89464 7.48043 9 7.73478 9 8V11ZM1.869 6.861C1.64051 6.75503 1.44239 6.59324 1.2929 6.39053C1.1434 6.18783 1.04736 5.95075 1.01362 5.70115C0.979884 5.45156 1.00954 5.19749 1.09985 4.96237C1.19016 4.72725 1.33822 4.51866 1.53038 4.35584C1.72253 4.19301 1.95259 4.08119 2.19934 4.03069C2.44609 3.98019 2.70159 3.99263 2.94226 4.06687C3.18293 4.14112 3.40104 4.27477 3.57646 4.4555C3.75188 4.63623 3.87897 4.85822 3.946 5.101C4.30638 4.88907 4.68287 4.70584 5.072 4.553C4.63466 4.2491 4.3058 3.81348 4.13333 3.30962C3.96086 2.80576 3.9538 2.25999 4.11318 1.75184C4.27255 1.24368 4.59004 0.799703 5.01937 0.484591C5.4487 0.169479 5.96744 -0.000297705 6.5 3.91882e-07H9.5C10.0326 -0.000297705 10.5513 0.169479 10.9806 0.484591C11.41 0.799703 11.7274 1.24368 11.8868 1.75184C12.0462 2.25999 12.0391 2.80576 11.8667 3.30962C11.6942 3.81348 11.3653 4.2491 10.928 4.553C11.318 4.707 11.695 4.89 12.054 5.101C12.121 4.85822 12.2481 4.63623 12.4235 4.4555C12.599 4.27477 12.8171 4.14112 13.0577 4.06687C13.2984 3.99263 13.5539 3.98019 13.8007 4.03069C14.0474 4.08119 14.2775 4.19301 14.4696 4.35584C14.6618 4.51866 14.8098 4.72725 14.9002 4.96237C14.9905 5.19749 15.0201 5.45156 14.9864 5.70115C14.9526 5.95075 14.8566 6.18783 14.7071 6.39053C14.5576 6.59324 14.3595 6.75503 14.131 6.861C15.1089 8.02784 15.7335 9.44949 15.9315 10.959C16.1296 12.4685 15.8928 14.0031 15.2489 15.3827C14.6051 16.7623 13.581 17.9295 12.2969 18.7473C11.0127 19.5651 9.52193 19.9996 7.9995 19.9996C6.47708 19.9996 4.98626 19.5651 3.70214 18.7473C2.41801 17.9295 1.3939 16.7623 0.750073 15.3827C0.106247 14.0031 -0.13056 12.4685 0.0674641 10.959C0.265488 9.44949 0.890119 8.02784 1.868 6.861H1.869ZM8 18C9.5913 18 11.1174 17.3679 12.2426 16.2426C13.3679 15.1174 14 13.5913 14 12C14 10.4087 13.3679 8.88258 12.2426 7.75736C11.1174 6.63214 9.5913 6 8 6C6.4087 6 4.88258 6.63214 3.75736 7.75736C2.63214 8.88258 2 10.4087 2 12C2 13.5913 2.63214 15.1174 3.75736 16.2426C4.88258 17.3679 6.4087 18 8 18V18ZM6.5 2C6.36739 2 6.24022 2.05268 6.14645 2.14645C6.05268 2.24022 6 2.36739 6 2.5C6 2.63261 6.05268 2.75979 6.14645 2.85355C6.24022 2.94732 6.36739 3 6.5 3H9.5C9.63261 3 9.75979 2.94732 9.85355 2.85355C9.94732 2.75979 10 2.63261 10 2.5C10 2.36739 9.94732 2.24022 9.85355 2.14645C9.75979 2.05268 9.63261 2 9.5 2H6.5Z"
+              fill="black" />
+          </svg>
+        </div>
+        <div class="mode" id="btnTimer"> timer
+          <svg width="16" height="20" viewBox="0 0 16 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M9 11H11C11.2652 11 11.5196 11.1054 11.7071 11.2929C11.8946 11.4804 12 11.7348 12 12C12 12.2652 11.8946 12.5196 11.7071 12.7071C11.5196 12.8946 11.2652 13 11 13H8C7.86857 13.0004 7.73835 12.9748 7.61685 12.9247C7.49535 12.8746 7.38495 12.8009 7.29201 12.708C7.19907 12.6151 7.12543 12.5047 7.07531 12.3832C7.0252 12.2616 6.99961 12.1314 7 12V8C7 7.73478 7.10536 7.48043 7.29289 7.29289C7.48043 7.10536 7.73478 7 8 7C8.26522 7 8.51957 7.10536 8.70711 7.29289C8.89464 7.48043 9 7.73478 9 8V11ZM1.869 6.861C1.64051 6.75503 1.44239 6.59324 1.2929 6.39053C1.1434 6.18783 1.04736 5.95075 1.01362 5.70115C0.979884 5.45156 1.00954 5.19749 1.09985 4.96237C1.19016 4.72725 1.33822 4.51866 1.53038 4.35584C1.72253 4.19301 1.95259 4.08119 2.19934 4.03069C2.44609 3.98019 2.70159 3.99263 2.94226 4.06687C3.18293 4.14112 3.40104 4.27477 3.57646 4.4555C3.75188 4.63623 3.87897 4.85822 3.946 5.101C4.30638 4.88907 4.68287 4.70584 5.072 4.553C4.63466 4.2491 4.3058 3.81348 4.13333 3.30962C3.96086 2.80576 3.9538 2.25999 4.11318 1.75184C4.27255 1.24368 4.59004 0.799703 5.01937 0.484591C5.4487 0.169479 5.96744 -0.000297705 6.5 3.91882e-07H9.5C10.0326 -0.000297705 10.5513 0.169479 10.9806 0.484591C11.41 0.799703 11.7274 1.24368 11.8868 1.75184C12.0462 2.25999 12.0391 2.80576 11.8667 3.30962C11.6942 3.81348 11.3653 4.2491 10.928 4.553C11.318 4.707 11.695 4.89 12.054 5.101C12.121 4.85822 12.2481 4.63623 12.4235 4.4555C12.599 4.27477 12.8171 4.14112 13.0577 4.06687C13.2984 3.99263 13.5539 3.98019 13.8007 4.03069C14.0474 4.08119 14.2775 4.19301 14.4696 4.35584C14.6618 4.51866 14.8098 4.72725 14.9002 4.96237C14.9905 5.19749 15.0201 5.45156 14.9864 5.70115C14.9526 5.95075 14.8566 6.18783 14.7071 6.39053C14.5576 6.59324 14.3595 6.75503 14.131 6.861C15.1089 8.02784 15.7335 9.44949 15.9315 10.959C16.1296 12.4685 15.8928 14.0031 15.2489 15.3827C14.6051 16.7623 13.581 17.9295 12.2969 18.7473C11.0127 19.5651 9.52193 19.9996 7.9995 19.9996C6.47708 19.9996 4.98626 19.5651 3.70214 18.7473C2.41801 17.9295 1.3939 16.7623 0.750073 15.3827C0.106247 14.0031 -0.13056 12.4685 0.0674641 10.959C0.265488 9.44949 0.890119 8.02784 1.868 6.861H1.869ZM8 18C9.5913 18 11.1174 17.3679 12.2426 16.2426C13.3679 15.1174 14 13.5913 14 12C14 10.4087 13.3679 8.88258 12.2426 7.75736C11.1174 6.63214 9.5913 6 8 6C6.4087 6 4.88258 6.63214 3.75736 7.75736C2.63214 8.88258 2 10.4087 2 12C2 13.5913 2.63214 15.1174 3.75736 16.2426C4.88258 17.3679 6.4087 18 8 18V18ZM6.5 2C6.36739 2 6.24022 2.05268 6.14645 2.14645C6.05268 2.24022 6 2.36739 6 2.5C6 2.63261 6.05268 2.75979 6.14645 2.85355C6.24022 2.94732 6.36739 3 6.5 3H9.5C9.63261 3 9.75979 2.94732 9.85355 2.85355C9.94732 2.75979 10 2.63261 10 2.5C10 2.36739 9.94732 2.24022 9.85355 2.14645C9.75979 2.05268 9.63261 2 9.5 2H6.5Z"
+              fill="black" />
+          </svg>
+        </div>
+      </div>
+      <div class="tab" id="chrono">
+        <div class="output">
+          <div class="hours"></div> :
+          <div class="minutes"></div> :
+          <div class="seconds"></div> :
+          <div class="miliseconds"></div>
+        </div>
+        <div class="buttons">
+          <button class="start">Start [enter]</button>
+          <button class="stop">Stop [escape]</button>
+          <button class="reset">Reset [R]</button>
+        </div>
+      </div>
+      <div class="tab hidden" id="timer">
+        <div class="input">
+          <input type="number" class="timer-hours" />:
+          <input type="number" class="timer-minutes" />:
+          <input type="number" class="timer-seconds" />
+        </div>
+        <div class="buttons">
+          <button class="startTimer">Start [t]</button>
+          <button class="stopTimer">Stop [y]</button>
+          <button class="resetTimer">Reset [u]</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // declaro los controles que voy a utilizar (se puede abreviar const cuando se declara una tras otra constante)
+    const start = document.querySelector('.start')
+    stop = document.querySelector('.stop')
+    reset = document.querySelector('.reset')
+    timerInput = document.querySelector('#inputTimer')
+    startTimer = document.querySelector('.startTimer')
+    stopTimer = document.querySelector('.stopTimer')
+    resetTimer = document.querySelector('.resetTimer')
+
+    output = document.querySelector('.output')
+    hours = document.querySelector('.hours')
+    minutes = document.querySelector('.minutes')
+    seconds = document.querySelector('.seconds')
+    miliseconds = document.querySelector('.miliseconds')
+
+    timerHours = document.querySelector('.timer-hours')
+    timerMinutes = document.querySelector('.timer-minutes')
+    timerSeconds = document.querySelector('.timer-seconds')
+
+    input = document.querySelector('.input')
+    hoursTimer = document.querySelector('.input .hours')
+    minutesTimer = document.querySelector('.input .minutes')
+    secondsTimer = document.querySelector('.input .seconds')
+    milisecondsTimer = document.querySelector('.input .miliseconds')
+
+    btnChrono = document.querySelector('#btnChrono')
+    btnTimer = document.querySelector('#btnTimer')
+
+    tabChrono = document.querySelector('#chrono')
+    tabTimer = document.querySelector('#timer')
+    mode = 'chrono'
+
+    // defino un objeto con el tiempo (myinterval tambien es un let pero se puede abreviar cuando las definiciones vienen juntas)
+    let chrono = {
+      hours: `00`,
+      minutes: `00`,
+      seconds: `00`,
+      miliseconds: `00`
+    }
+    let timer = {
+      hours: `00`,
+      minutes: `05`,
+      seconds: `30`
+    }
+    myinterval = ``,
+      isRunning = false,
+      timerIsRunning = false
+
+
+    //document ready
+    document.addEventListener("DOMContentLoaded", function (event) {
+      //output.innerHTML= chrono;
+      displayChrono();
+      modeSelector();
+    });
+
+    // defino que quiero que escuche el script (clicks o teclas)
+    start.addEventListener('click', playChrono)
+    stop.addEventListener('click', stopChrono)
+    reset.addEventListener('click', resetChrono)
+
+    startTimer.addEventListener('click', playTimer)
+    stopTimer.addEventListener('click', stopTimer)
+    resetTimer.addEventListener('click', resetTimer)
+
+    document.addEventListener("keydown", function (e) {
+      //console.log(`Key "${e.key}" pressed [event: keydown]`);
+      if (e.key == 'Enter') {
+        playChrono()
+      }
+      if (e.key == 't') {
+        playTimer()
+      }
+      if (e.key == 'Escape') {
+        stopChrono()
+      }
+      if (e.key == 'y') {
+        stopTimer()
+      }
+      if (e.key == 'r') {
+        resetChrono()
+      }
+      if (e.key == 'u') {
+        resetTimer()
+      }
+    })
+    // defino mis funciones
+    btnChrono.addEventListener('click', function () {
+      mode = 'chrono'
+      console.log(mode);
+      modeSelector()
+    })
+    btnTimer.addEventListener('click', function () {
+      mode = 'timer'
+      console.log(mode);
+      modeSelector()
+    })
+
+    function modeSelector() {
+      if (mode == 'chrono') {
+        tabChrono.classList.remove('hidden')
+        tabTimer.classList.add('hidden')
+      } else if (mode = 'timer') {
+        tabTimer.classList.remove('hidden')
+        tabChrono.classList.add('hidden')
+        displayTimer();
+      }
+    }
+
+    function displayChrono() {
+      hours.textContent = chrono.hours;
+      minutes.textContent = chrono.minutes;
+      seconds.textContent = chrono.seconds;
+      miliseconds.textContent = chrono.miliseconds;
+    }
+
+    function displayTimer() {
+      timerHours.value = timer.hours;
+      timerMinutes.value = timer.minutes;
+      timerSeconds.value = timer.seconds;
+
+    }
+
+
+
+    function chronStart() {
+      console.log('has started');
+      chrono.miliseconds++
+
+      if (chrono.miliseconds > 59) {
+        chrono.miliseconds = `00`
+        chrono.seconds++
+        /* esta validación debe hacerse solo dentro de este bloque*/
+        if (chrono.seconds < 10) {
+          chrono.seconds = '0' + chrono.seconds
+        }
+      }
+
+      if (chrono.seconds > 59) {
+        chrono.seconds = `00`
+
+        chrono.minutes++
+        if (chrono.minutes < 10) {
+          chrono.minutes = '0' + chrono.minutes
+        }
+      }
+      if (chrono.minutes > 59) {
+        chrono.minutes = `00`
+        chrono.hours++
+        if (chrono.hours < 10) {
+          chrono.hours = '0' + chrono.hours
+        }
+      }
+
+      miliseconds.textContent = `${chrono.miliseconds}`
+      seconds.textContent = `${chrono.seconds}`
+      minutes.textContent = `${chrono.minutes}`
+      hours.textContent = `${chrono.hours}`
+
+    }
+
+    function timerStart() {
+
+      timer.seconds--
+      if (timer.seconds < 0 && timer.minutes > 0) {
+        timer.seconds = `59`
+
+        timer.minutes--
+        if (timer.minutes < 10) {
+          timer.minutes = '0' + timer.minutes
+        }
+      }
+      if (timer.minutes < 0 && timer.hours > 0) {
+        timer.minutes = `59`
+        timer.hours--
+        if (timer.hours < 10) {
+          timer.hours = '0' + timer.hours
+        }
+      }
+      timerSeconds.value = `${timer.seconds}`
+      timerMinutes.value = `${timer.minutes}`
+      timerHours.value = `${timer.hours}`
+      if (timer.seconds < 0) {
+        stopTimer()
+      }
+
+    }
+
+    function playChrono() {
+      // defino una variable con intervalo para poder resetearla en stop
+      if (isRunning === false) {
+        myinterval = setInterval(chronStart, 00)
+        start.setAttribute('disabled', '')
+      }
+      isRunning = true
+
+    }
+
+    function playTimer() {
+      // defino una variable con intervalo para poder resetearla en stop
+      if (isRunning === false) {
+
+        myintervalTimer = setInterval(timerStart, 60)
+
+      }
+      timerIsRunning = true
+
+      if (timerIsRunning === true) {
+
+        timerHours.disabled = true
+        timerMinutes.disabled = true
+        timerSeconds.disabled = true
+
+
+      }
+    }
+
+    function stopChrono() {
+      console.log('stop')
+      if (isRunning === true) {
+        clearInterval(myinterval)
+        start.removeAttribute('disabled', '')
+      }
+      isRunning = false
+
+    }
+
+    function stopTimer() {
+      console.log('stop')
+      if (timerIsRunning === true) {
+        clearInterval(myintervalTimer)
+        startTimer.removeAttribute('disabled', '')
+      }
+      timerIsRunning = false
+
+    }
+
+    function resetChrono() {
+      console.log('reseting')
+      clearInterval(myinterval)
+      start.removeAttribute('disabled', '')
+      chrono = {
+        hours: `00`,
+        minutes: `00`,
+        seconds: `00`,
+        miliseconds: `00`
+      }
+      displayChrono();
+      isRunning = false
+    }
+
+    function resetTimer() {
+      console.log('reseting')
+      clearInterval(myintervalTimer)
+      startTimer.removeAttribute('disabled', '')
+      timer = {
+        hours: `00`,
+        minutes: `00`,
+        seconds: `00`,
+      }
+      displayTimer();
+      isRunning = false
+    }
+  </script>
+</body>
+
+</html>
